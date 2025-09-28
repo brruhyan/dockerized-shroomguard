@@ -8,8 +8,8 @@ import shutil
 # Flask app configuration
 app = Flask(__name__)
 
-UPLOAD_FOLDER = './static/uploads'
-RESULT_FOLDER = './static/results'
+UPLOAD_FOLDER = '/tmp/uploads'
+RESULT_FOLDER = '/tmp/results'
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 os.makedirs(RESULT_FOLDER, exist_ok=True)
 
