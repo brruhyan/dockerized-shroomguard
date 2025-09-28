@@ -1,9 +1,8 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, send_from_directory
 from werkzeug.utils import secure_filename
 from PIL import Image, ImageDraw, ImageFont
 import requests
 import os
-import base64
 
 app = Flask(__name__)
 
@@ -26,6 +25,14 @@ def home():
 def history():
     return render_template('history.html')
 
+@app.route('/uploads/<filename>')
+def uploaded_file(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+
+@app.route('/results/<filename>')
+def result_file(filename):
+    return send_from_directory(app.config['RESULT_FOLDER'], filename)
+
 @app.route('/upload', methods=['POST'])
 def upload_image():
     if 'file' not in request.files:
@@ -46,15 +53,9 @@ def upload_image():
             counts = count_prediction_classes(predictions)
             total_mushrooms = sum(counts.values())
 
-            with open(result_path, "rb") as img_file:
-                processed_image_base64 = base64.b64encode(img_file.read()).decode('utf-8')
-
-            with open(filepath, "rb") as img_file:
-                original_image_base64 = base64.b64encode(img_file.read()).decode('utf-8')
-
             return jsonify({
-                "original_image": original_image_base64,
-                "processed_image": processed_image_base64,
+                "original_image_url": f"/uploads/{filename}",
+                "processed_image_url": f"/results/{os.path.basename(result_path)}",
                 "ready": counts.get("READY", 0),
                 "notReady": counts.get("NOT_READY", 0),
                 "overdue": counts.get("OVERDUE", 0),
