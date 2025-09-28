@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+
+{% block page_title %}Scan History{% endblock %}
+
+{% block content %}
+<div class="history-header">
+    <h2><i class="fas fa-history"></i> Scan History</h2>
+    <div class="history-actions">
+        <button class="btn btn-secondary" onclick="exportHistory()">
+            <i class="fas fa-download"></i> Export
+        </button>
+        <button class="btn btn-danger" onclick="clearHistory()">
+            <i class="fas fa-trash"></i> Clear History
+        </button>
+    </div>
+</div>
+
+<!-- Summary Stats -->
+<div class="stats-grid">
+    <div class="stat-card total-scans">
+        <div class="stat-header">
+            <h3>Total Scans</h3>
+            <i class="fas fa-camera"></i>
+        </div>
+        <div class="stat-number" id="total-scans">0</div>
+        <div class="stat-label">Completed</div>
+    </div>
+    
+    <div class="stat-card total-mushrooms">
+        <div class="stat-header">
+            <h3>Total Mushrooms</h3>
+            <i class="fas fa-leaf"></i>
+        </div>
+        <div class="stat-number" id="total-mushrooms">0</div>
+        <div class="stat-label">Detected</div>
+    </div>
+    
+    <div class="stat-card avg-per-scan">
+        <div class="stat-header">
+            <h3>Average per Scan</h3>
+            <i class="fas fa-chart-line"></i>
+        </div>
+        <div class="stat-number" id="avg-per-scan">0</div>
+        <div class="stat-label">Mushrooms</div>
+    </div>
+</div>
+
+<!-- History Table -->
+<div class="history-table-section">
+    <div class="table-filters">
+        <div class="filter-group">
+            <label>Filter by Date:</label>
+            <input type="date" id="date-filter" onchange="filterHistory()">
+        </div>
+        <div class="filter-group">
+            <label>Filter by Class:</label>
+            <select id="class-filter" onchange="filterHistory()">
+                <option value="">All Classes</option>
+                <option value="ready">Ready</option>
+                <option value="not-ready">Not Ready</option>
+                <option value="overdue">Overdue</option>
+            </select>
+        </div>
+        <div class="search-group">
+            <input type="text" id="search-input" placeholder="Search..." onkeyup="filterHistory()">
+            <i class="fas fa-search"></i>
+        </div>
+    </div>
+
+    <div class="table-container">
+        <table class="history-table">
+            <thead>
+                <tr>
+                    <th onclick="sortTable(0)">Date & Time <i class="fas fa-sort"></i></th>
+                    <th onclick="sortTable(1)">Ready <i class="fas fa-sort"></i></th>
+                    <th onclick="sortTable(2)">Not Ready <i class="fas fa-sort"></i></th>
+                    <th onclick="sortTable(3)">Overdue <i class="fas fa-sort"></i></th>
+                    <th onclick="sortTable(4)">Total <i class="fas fa-sort"></i></th>
+                    <th>Images</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="history-table-body">
+                <!-- Dynamic content will be inserted here -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Image Modal -->
+<div class="modal" id="image-modal" style="display: none;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Scan Images</h3>
+            <span class="close" onclick="closeModal()">&times;</span>
+        </div>
+        <div class="modal-body">
+            <div class="modal-images">
+                <div class="modal-image-container">
+                    <h4>Original</h4>
+                    <img id="modal-original" src="" alt="Original Image">
+                </div>
+                <div class="modal-image-container">
+                    <h4>Processed</h4>
+                    <img id="modal-processed" src="" alt="Processed Image">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/history.js') }}"></script>
+{% endblock %}

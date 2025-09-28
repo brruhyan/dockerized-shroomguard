@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Statistics Cards -->
+<div class="stats-grid">
+    <div class="stat-card ready">
+        <div class="stat-header">
+            <h3>Ready</h3>
+            <i class="fas fa-check-circle"></i>
+        </div>
+        <div class="stat-number" id="ready-count">0</div>
+        <div class="stat-label">Mushrooms</div>
+    </div>
+    
+    <div class="stat-card not-ready">
+        <div class="stat-header">
+            <h3>Not Ready</h3>
+            <i class="fas fa-clock"></i>
+        </div>
+        <div class="stat-number" id="not-ready-count">0</div>
+        <div class="stat-label">Mushrooms</div>
+    </div>
+    
+    <div class="stat-card overdue">
+        <div class="stat-header">
+            <h3>Overdue</h3>
+            <i class="fas fa-exclamation-triangle"></i>
+        </div>
+        <div class="stat-number" id="overdue-count">0</div>
+        <div class="stat-label">Mushrooms</div>
+    </div>
+</div>
+
+<!-- Upload Section -->
+<div class="upload-section">
+    <div class="upload-card">
+        <h3><i class="fas fa-upload"></i> Upload Mushroom Image</h3>
+        <div class="upload-area" id="upload-area">
+            <div class="upload-content">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <p>Drag and drop your image here or click to browse</p>
+                <input type="file" id="file-input" accept="image/*" hidden>
+                <button type="button" class="upload-btn" id="choose-file-btn">
+                    Choose File
+                </button>
+            </div>
+        </div>
+        <div class="upload-progress" id="upload-progress" style="display: none;">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+            <span class="progress-text" id="progress-text">Processing...</span>
+        </div>
+    </div>
+</div>
+
+<!-- Image Display Section -->
+<div class="image-display-section" id="image-display" style="display: none;">
+    <div class="image-container">
+        <div class="image-card">
+            <h4>Original Image</h4>
+            <div class="image-wrapper">
+                <img id="original-image" src="" alt="Original Image">
+            </div>
+        </div>
+        <div class="image-card">
+            <h4>Processed Image</h4>
+            <div class="image-wrapper">
+                <img id="processed-image" src="" alt="Processed Image">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Recent Scans -->
+<div class="recent-scans">
+    <h3><i class="fas fa-history"></i> Recent Scans</h3>
+    <div class="scans-table-container">
+        <table class="scans-table">
+            <thead>
+                <tr>
+                    <th>Date & Time</th>
+                    <th>Ready</th>
+                    <th>Not Ready</th>
+                    <th>Overdue</th>
+                    <th>Total</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="recent-scans-body">
+                <!-- Dynamic content will be inserted here -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Loading Overlay -->
+<div class="loading-overlay" id="loading-overlay" style="display: none;">
+    <div class="loading-spinner">
+        <i class="fas fa-spinner fa-spin"></i>
+        <p>Processing your image...</p>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/upload.js') }}"></script>
+{% endblock %}
