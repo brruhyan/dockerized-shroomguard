@@ -44,7 +44,7 @@ pipeline{
                 sh 'docker rm mushroom-app || true'
 
                 // Run the container
-                sh 'docker run -d -p 5000:5000 --name mushroom-app mushroom-app:latest'
+                sh 'docker run -d -p 3000:3000 --name mushroom-app mushroom-app:latest'
             }
         }
 
