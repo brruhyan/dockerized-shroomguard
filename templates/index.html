@@ -1,103 +1,110 @@
 {% extends "base.html" %}
 
 {% block content %}
-<!-- Statistics Cards -->
-<div class="stats-grid">
-    <div class="stat-card ready">
-        <div class="stat-header">
-            <h3>Ready</h3>
-            <i class="fas fa-check-circle"></i>
-        </div>
-        <div class="stat-number" id="ready-count">0</div>
-        <div class="stat-label">Mushrooms</div>
-    </div>
-    
-    <div class="stat-card not-ready">
-        <div class="stat-header">
-            <h3>Not Ready</h3>
-            <i class="fas fa-clock"></i>
-        </div>
-        <div class="stat-number" id="not-ready-count">0</div>
-        <div class="stat-label">Mushrooms</div>
-    </div>
-    
-    <div class="stat-card overdue">
-        <div class="stat-header">
-            <h3>Overdue</h3>
-            <i class="fas fa-exclamation-triangle"></i>
-        </div>
-        <div class="stat-number" id="overdue-count">0</div>
-        <div class="stat-label">Mushrooms</div>
-    </div>
-</div>
+<div class="page-stack">
+    <section class="stats-grid" aria-label="Mushroom status summary">
+        <article class="stat-card ready">
+            <div class="stat-header">
+                <h2>Ready</h2>
+                <i class="fas fa-check-circle" aria-hidden="true"></i>
+            </div>
+            <div class="stat-number" id="ready-count">0</div>
+            <div class="stat-label">Mushrooms</div>
+        </article>
 
-<!-- Upload Section -->
-<div class="upload-section">
-    <div class="upload-card">
-        <h3><i class="fas fa-upload"></i> Upload Mushroom Image</h3>
-        <div class="upload-area" id="upload-area">
-            <div class="upload-content">
-                <i class="fas fa-cloud-upload-alt"></i>
-                <p>Drag and drop your image here or click to browse</p>
-                <input type="file" id="file-input" accept="image/*" hidden>
-                <button type="button" class="upload-btn" id="choose-file-btn">
-                    Choose File
-                </button>
+        <article class="stat-card not-ready">
+            <div class="stat-header">
+                <h2>Not Ready</h2>
+                <i class="fas fa-clock" aria-hidden="true"></i>
+            </div>
+            <div class="stat-number" id="not-ready-count">0</div>
+            <div class="stat-label">Mushrooms</div>
+        </article>
+
+        <article class="stat-card overdue">
+            <div class="stat-header">
+                <h2>Overdue</h2>
+                <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
+            </div>
+            <div class="stat-number" id="overdue-count">0</div>
+            <div class="stat-label">Mushrooms</div>
+        </article>
+    </section>
+
+    <section class="upload-section" aria-labelledby="upload-title">
+        <div class="upload-card">
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow">Mushroom analysis</p>
+                    <h2 id="upload-title">Upload Mushroom Image</h2>
+                </div>
+                <i class="fas fa-upload section-icon" aria-hidden="true"></i>
+            </div>
+            <div class="upload-area" id="upload-area">
+                <div class="upload-content">
+                    <i class="fas fa-cloud-upload-alt" aria-hidden="true"></i>
+                    <p>Drag and drop your image here or click to browse</p>
+                    <input type="file" id="file-input" accept="image/*" hidden>
+                    <button type="button" class="upload-btn" id="choose-file-btn">Choose File</button>
+                </div>
+            </div>
+            <div class="upload-progress" id="upload-progress" style="display: none;">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+                <span class="progress-text" id="progress-text">Processing...</span>
             </div>
         </div>
-        <div class="upload-progress" id="upload-progress" style="display: none;">
-            <div class="progress-bar">
-                <div class="progress-fill" id="progress-fill"></div>
-            </div>
-            <span class="progress-text" id="progress-text">Processing...</span>
+    </section>
+
+    <section class="image-display-section" id="image-display" style="display: none;" aria-label="Scan image results">
+        <div class="image-container">
+            <article class="image-card">
+                <h3>Original Image</h3>
+                <div class="image-wrapper">
+                    <img id="original-image" src="" alt="Original Image">
+                </div>
+            </article>
+            <article class="image-card">
+                <h3>Processed Image</h3>
+                <div class="image-wrapper">
+                    <img id="processed-image" src="" alt="Processed Image">
+                </div>
+            </article>
         </div>
-    </div>
+    </section>
+
+    <section class="recent-scans" aria-labelledby="recent-scans-title">
+        <div class="section-heading">
+            <div>
+                <p class="eyebrow">Activity</p>
+                <h2 id="recent-scans-title">Recent Scans</h2>
+            </div>
+            <i class="fas fa-history section-icon" aria-hidden="true"></i>
+        </div>
+        <div class="scans-table-container">
+            <table class="scans-table">
+                <thead>
+                    <tr>
+                        <th>Date &amp; Time</th>
+                        <th>Ready</th>
+                        <th>Not Ready</th>
+                        <th>Overdue</th>
+                        <th>Total</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="recent-scans-body">
+                    <!-- Dynamic content will be inserted here -->
+                </tbody>
+            </table>
+        </div>
+    </section>
 </div>
 
-<!-- Image Display Section -->
-<div class="image-display-section" id="image-display" style="display: none;">
-    <div class="image-container">
-        <div class="image-card">
-            <h4>Original Image</h4>
-            <div class="image-wrapper">
-                <img id="original-image" src="" alt="Original Image">
-            </div>
-        </div>
-        <div class="image-card">
-            <h4>Processed Image</h4>
-            <div class="image-wrapper">
-                <img id="processed-image" src="" alt="Processed Image">
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Recent Scans -->
-<div class="recent-scans">
-    <h3><i class="fas fa-history"></i> Recent Scans</h3>
-    <div class="scans-table-container">
-        <table class="scans-table">
-            <thead>
-                <tr>
-                    <th>Date & Time</th>
-                    <th>Ready</th>
-                    <th>Not Ready</th>
-                    <th>Overdue</th>
-                    <th>Total</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody id="recent-scans-body">
-                <!-- Dynamic content will be inserted here -->
-            </tbody>
-        </table>
-    </div>
-</div>
-
-<!-- Loading Overlay -->
-<div class="loading-overlay" id="loading-overlay" style="display: none;">
+<div class="loading-overlay" id="loading-overlay" style="display: none;" aria-live="polite">
     <div class="loading-spinner">
-        <i class="fas fa-spinner fa-spin"></i>
+        <i class="fas fa-spinner fa-spin" aria-hidden="true"></i>
         <p>Processing your image...</p>
     </div>
 </div>
